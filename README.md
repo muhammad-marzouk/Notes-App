@@ -16,7 +16,8 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 # flutter --version
-Flutter 3.16.5 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision 78666c8dc5 (2 months ago) • 2023-12-19 16:14:14 -0800
-Engine • revision 3f3e560236
-Tools • Dart 3.2.3 • DevTools 2.28.4
+Flutter 3.16.5
+channel stable https://github.com/flutter/flutter.git
+Engine: revision 3f3e560236
+Tools: Dart 3.2.3 
+DevTools: 2.28.4
