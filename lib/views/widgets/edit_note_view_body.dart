@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'custom_app_bar.dart';
-import 'notes_list_view.dart';
+import 'package:notsapp/views/widgets/custom_app_bar.dart';
 
-class NoteViewBody extends StatelessWidget {
-  const NoteViewBody({super.key});
+class EditNoteViewBody extends StatelessWidget {
+  const EditNoteViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +14,10 @@ class NoteViewBody extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomAppBar(title: "Notes",icon: Icons.search),
-
-            Expanded(
-                child: NotesListView(),
-            )
+            CustomAppBar(icon: Icons.edit_rounded,title: "Edite Note"),
           ],
         ),
       ),
     );
   }
 }
-
-
