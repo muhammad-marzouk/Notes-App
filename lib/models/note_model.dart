@@ -22,3 +22,4 @@ class NoteModel extends HiveObject{
 // # Register Adapter
 // Can be generated automatically
 // Terminal => dart run build_runner build
+// https://docs.hivedb.dev/#/custom-objects/generate_adapter
