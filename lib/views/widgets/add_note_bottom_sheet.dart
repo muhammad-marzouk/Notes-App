@@ -41,24 +41,37 @@ class _AddNoteFormState extends State<AddNoteForm> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          SizedBox(
-            height: 35,
-          ),
+          const SizedBox(height: 35),
           CustomTextField(
+            // 10- onSaved
+            onSaved: (value){
+              title = value;
+            },
             hint: 'Title',
           ),
-          SizedBox(
-            height: 14,
-          ),
-          CustomTextField(hint: 'Content', maxLine: 5),
-          SizedBox(
-            height: 100,
-          ),
+          const SizedBox(height: 14),
+          CustomTextField(
+            // 11- onSaved
+            onSaved: (value){
+              subTitle = value;
+            },
+            hint: 'Content', maxLine: 5,),
+          const SizedBox(height: 100),
           // Spacer(), give Error
-          CustomButton(),
-          SizedBox(
-            height: 20,
+          CustomButton(
+            // 15- validate in onTap
+            onTap: (){
+              if (formKey.currentState!.validate()){
+                formKey.currentState!.save();
+              }else{
+                autoValidateMode = AutovalidateMode.always;
+                setState(() {
+
+                });
+              }
+            },
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -66,25 +79,30 @@ class _AddNoteFormState extends State<AddNoteForm> {
 }
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key});
-
+  const CustomButton({super.key, this.onTap});
+  // 14- create onTap function and add to constructor
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.height;
-
-    return Container(
-      width: width,
-      height: 55,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: KPrimaryColor,
+    // -12 GestureDetector
+    return GestureDetector(
+      // 13- onTap and add to constructor
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: 55,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: KPrimaryColor,
+        ),
+        child: const Center(
+            child: Text(
+          "ADD",
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+        )),
       ),
-      child: const Center(
-          child: Text(
-        "ADD",
-        style: TextStyle(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
-      )),
     );
   }
 }

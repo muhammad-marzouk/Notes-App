@@ -15,6 +15,14 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       // 8- onSaved
       onSaved: onSaved,
+      // 9- validator
+      validator: (value){
+        if (value?.isEmpty ?? true){
+          return 'Field is Required';
+        }else{
+          return null;
+        }
+      },
       cursorColor: KPrimaryColor,
       maxLines: maxLine,
       textAlignVertical: TextAlignVertical.center,
