@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, required this.hint, this.maxLine =1, this.onSaved});
+  const CustomTextField(
+      {super.key, required this.hint, this.maxLine = 1, this.onSaved});
 
   final String hint;
   final int maxLine;
+
   // 9- create function to onSaved and add to constructor
   final void Function(String?)? onSaved;
+
   @override
   Widget build(BuildContext context) {
     // 7- convert from textField to TextFormField
@@ -16,10 +19,10 @@ class CustomTextField extends StatelessWidget {
       // 8- onSaved
       onSaved: onSaved,
       // 9- validator
-      validator: (value){
-        if (value?.isEmpty ?? true){
+      validator: (value) {
+        if (value?.isEmpty ?? true) {
           return 'Field is Required';
-        }else{
+        } else {
           return null;
         }
       },
@@ -29,14 +32,16 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hint,
         hintTextDirection: TextDirection.ltr,
-        hintStyle:const TextStyle(
+        hintStyle: const TextStyle(
           color: KPrimaryColor,
         ),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(
               14,
             ),
-            borderSide: const BorderSide(color: Colors.white)),
+            borderSide: const BorderSide(
+              color: Colors.white,
+            )),
         enabledBorder: buildBorder(),
         focusedBorder: buildBorder(KPrimaryColor),
       ),

@@ -26,10 +26,13 @@ class AddNoteForm extends StatefulWidget {
 class _AddNoteFormState extends State<AddNoteForm> {
   // 2- add FormState Key
   final GlobalKey<FormState> formKey = GlobalKey();
+
   // 4- add autoValidateMode
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+
   // 6- create two Variable not final => StatefulWidget
   String? title, subTitle;
+
   @override
   Widget build(BuildContext context) {
     // 1- add form
@@ -44,7 +47,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
           const SizedBox(height: 35),
           CustomTextField(
             // 10- onSaved
-            onSaved: (value){
+            onSaved: (value) {
               title = value;
             },
             hint: 'Title',
@@ -52,22 +55,21 @@ class _AddNoteFormState extends State<AddNoteForm> {
           const SizedBox(height: 14),
           CustomTextField(
             // 11- onSaved
-            onSaved: (value){
+            onSaved: (value) {
               subTitle = value;
             },
-            hint: 'Content', maxLine: 5,),
+            hint: 'Content', maxLine: 5,
+          ),
           const SizedBox(height: 100),
           // Spacer(), give Error
           CustomButton(
             // 15- validate in onTap
-            onTap: (){
-              if (formKey.currentState!.validate()){
+            onTap: () {
+              if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-              }else{
+              } else {
                 autoValidateMode = AutovalidateMode.always;
-                setState(() {
-
-                });
+                setState(() {});
               }
             },
           ),
@@ -80,8 +82,10 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key, this.onTap});
+
   // 14- create onTap function and add to constructor
   final void Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.height;
@@ -100,7 +104,10 @@ class CustomButton extends StatelessWidget {
             child: Text(
           "ADD",
           style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
         )),
       ),
     );
