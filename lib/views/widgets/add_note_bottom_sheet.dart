@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notsapp/constants.dart';
+import '../../cubits/add_note_cubit/add_note_cubit.dart';
 import 'custom_text_field.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
@@ -7,10 +11,27 @@ class AddNoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: SingleChildScrollView(
-        child: AddNoteForm(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteFailure){
+            if (kDebugMode) {
+              print("Failed $state.errorMessage");
+            }
+          }
+          if(state is AddNoteSuccess){
+            Navigator.pop(context);
+          }
+        },
+        builder: (context, state) {
+          return ModalProgressHUD(
+            inAsyncCall: state is AddNoteLoading ? true : false,
+            child: const SingleChildScrollView(
+              child: AddNoteForm(),
+            ),
+          );
+        },
       ),
     );
   }
@@ -24,20 +45,13 @@ class AddNoteForm extends StatefulWidget {
 }
 
 class _AddNoteFormState extends State<AddNoteForm> {
-  // 2- add FormState Key
   final GlobalKey<FormState> formKey = GlobalKey();
-
-  // 4- add autoValidateMode
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
-
-  // 6- create two Variable not final => StatefulWidget
   String? title, subTitle;
 
   @override
   Widget build(BuildContext context) {
-    // 1- add form
     return Form(
-      // 3 key
       key: formKey,
       // 5- auto validateMode the value will be change => StatefulWidget
       autovalidateMode: autoValidateMode,
@@ -46,7 +60,6 @@ class _AddNoteFormState extends State<AddNoteForm> {
         children: [
           const SizedBox(height: 35),
           CustomTextField(
-            // 10- onSaved
             onSaved: (value) {
               title = value;
             },
@@ -54,16 +67,14 @@ class _AddNoteFormState extends State<AddNoteForm> {
           ),
           const SizedBox(height: 14),
           CustomTextField(
-            // 11- onSaved
             onSaved: (value) {
               subTitle = value;
             },
-            hint: 'Content', maxLine: 5,
+            hint: 'Content',
+            maxLine: 5,
           ),
           const SizedBox(height: 100),
-          // Spacer(), give Error
           CustomButton(
-            // 15- validate in onTap
             onTap: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
@@ -83,15 +94,12 @@ class _AddNoteFormState extends State<AddNoteForm> {
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key, this.onTap});
 
-  // 14- create onTap function and add to constructor
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.height;
-    // -12 GestureDetector
     return GestureDetector(
-      // 13- onTap and add to constructor
       onTap: onTap,
       child: Container(
         width: width,
