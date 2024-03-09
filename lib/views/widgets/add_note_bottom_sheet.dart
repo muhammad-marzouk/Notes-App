@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notsapp/constants.dart';
+import 'package:notsapp/models/note_model.dart';
 import '../../cubits/add_note_cubit/add_note_cubit.dart';
 import 'custom_text_field.dart';
 
@@ -11,7 +12,9 @@ class AddNoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return BlocProvider(
+  create: (context) => AddNoteCubit(),
+  child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: BlocConsumer<AddNoteCubit, AddNoteState>(
         listener: (context, state) {
@@ -33,7 +36,8 @@ class AddNoteBottomSheet extends StatelessWidget {
           );
         },
       ),
-    );
+    ),
+);
   }
 }
 
@@ -78,6 +82,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
             onTap: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
+                var notModel = NoteModel(title: title!, subTitle: subTitle!, date: DateTime.now().toString(), color: Colors.blue.value);
+                BlocProvider.of<AddNoteCubit>(context).addNote(notModel);
               } else {
                 autoValidateMode = AutovalidateMode.always;
                 setState(() {});
