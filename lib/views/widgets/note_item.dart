@@ -13,13 +13,13 @@ class NoteItem extends StatelessWidget {
         Navigator.push(
             context,
         MaterialPageRoute(builder: (context){
-          return EditNoteView();
+          return const EditNoteView();
         }));
       },
       child: Container(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Color(0xffFFCC80),
+          color: const Color(0xffFFCC80),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -27,7 +27,7 @@ class NoteItem extends StatelessWidget {
           children: [
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: Text(
+              title: const Text(
                 "Flutter Tips",
                 style: TextStyle(
                   color: Colors.black,
@@ -45,9 +45,9 @@ class NoteItem extends StatelessWidget {
                 ),
               ),
               trailing: IconButton(
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20),
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     FontAwesomeIcons.trash,
                     color: Colors.black,
                     size: 24,
