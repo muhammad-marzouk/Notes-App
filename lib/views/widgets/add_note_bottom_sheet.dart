@@ -13,31 +13,31 @@ class AddNoteBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-  create: (context) => AddNoteCubit(),
-  child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      create: (context) => AddNoteCubit(),
       child: BlocConsumer<AddNoteCubit, AddNoteState>(
         listener: (context, state) {
-          if (state is AddNoteFailure){
+          if (state is AddNoteFailure) {
             if (kDebugMode) {
               print("Failed $state.errorMessage");
             }
           }
-          if(state is AddNoteSuccess){
+          if (state is AddNoteSuccess) {
             Navigator.pop(context);
           }
         },
         builder: (context, state) {
           return ModalProgressHUD(
             inAsyncCall: state is AddNoteLoading ? true : false,
-            child: const SingleChildScrollView(
-              child: AddNoteForm(),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: SingleChildScrollView(
+                child: AddNoteForm(),
+              ),
             ),
           );
         },
       ),
-    ),
-);
+    );
   }
 }
 
@@ -82,7 +82,11 @@ class _AddNoteFormState extends State<AddNoteForm> {
             onTap: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-                var notModel = NoteModel(title: title!, subTitle: subTitle!, date: DateTime.now().toString(), color: Colors.blue.value);
+                var notModel = NoteModel(
+                    title: title!,
+                    subTitle: subTitle!,
+                    date: DateTime.now().toString(),
+                    color: Colors.blue.value);
                 BlocProvider.of<AddNoteCubit>(context).addNote(notModel);
               } else {
                 autoValidateMode = AutovalidateMode.always;
